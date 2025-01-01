@@ -2,24 +2,9 @@
 	import { Card } from 'flowbite-svelte';
 	import { Heading } from 'flowbite-svelte';
 	import { Listgroup } from 'flowbite-svelte';
+	import type { PokemonData } from '$lib/types/types';
 
-	interface Ability {
-		ability: {
-			name: string;
-		};
-	}
-
-	let {
-		id,
-		name,
-		images,
-		abilities
-	}: {
-		id: number;
-		name: string;
-		images: { front_default: string; back_default: string };
-		abilities: Ability[];
-	} = $props();
+	let { id, name, images, abilities }: PokemonData = $props();
 </script>
 
 <Card class="mobile-only:w-auto">

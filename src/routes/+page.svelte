@@ -5,17 +5,12 @@
 	import Pokemon from '$lib/components/Pokemon/Pokemon.svelte';
 	import Alert from '$lib/components/Alert/Alert.svelte';
 	import { fade } from 'svelte/transition';
-
-	type PokemonData = {
-		id: number;
-		name: string;
-		images: any;
-		abilities: any[];
-	};
+	import { type PokemonData } from '$lib/types/types';
 
 	$: pokemon = '';
 	let pokemonData: PokemonData;
-	$: error = false;
+	$: requestError = false;
+	$: errorMessage = 'Please enter a Pokemon name.';
 
 	const handleChange = (e: Event) => {
 		const target = e.target as HTMLInputElement | null;
@@ -26,15 +21,30 @@
 	const fetchPokemon = async (e: SubmitEvent) => {
 		e.preventDefault();
 		if (!pokemon) {
-			error = true;
+			requestError = true;
 			setTimeout(() => {
-				error = false;
+				requestError = false;
 			}, 3000);
 			return;
 		}
-		const data = await getPokemon(pokemon);
-		pokemon = '';
-		pokemonData = { id: data.id, name: data.name, images: data.sprites, abilities: data.abilities };
+
+		try {
+			const data = await getPokemon(pokemon);
+			pokemon = '';
+			pokemonData = {
+				id: data.id,
+				name: data.name,
+				images: data.sprites,
+				abilities: data.abilities
+			};
+		} catch (error: any) {
+			errorMessage = 'Pokemon not found. Please try again.';
+			requestError = true;
+			setTimeout(() => {
+				requestError = false;
+			}, 3000);
+			console.error('ERROR:', { error });
+		}
 	};
 </script>
 
@@ -42,9 +52,9 @@
 <section class="mt-28 flex flex-col items-center">
 	<Heading tag="h1" class="text-center text-4xl font-bold	">Pokedex Search</Heading>
 
-	{#if error}
+	{#if requestError}
 		<div transition:fade={{ duration: 300 }} class="w-2/4">
-			<Alert type="red" message="Please enter a Pokemon name." />
+			<Alert type="red" message={errorMessage} />
 		</div>
 	{/if}
 	<form
