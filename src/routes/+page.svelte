@@ -3,9 +3,17 @@
 	import { Label, Input } from 'flowbite-svelte';
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import getPokemon from '$lib/api/pokemon/index';
+	import Pokemon from '$lib/components/Pokemon/Pokemon.svelte';
+
+	type PokemonData = {
+		id: number;
+		name: string;
+		images: any;
+		abilities: any[];
+	};
 
 	$: pokemon = '';
-	$: pokemonData = {};
+	let pokemonData: PokemonData;
 
 	const handleChange = (e: Event) => {
 		const target = e.target as HTMLInputElement | null;
@@ -28,4 +36,7 @@
 		<Label for="input" class="mb-2 block">Enter Pokemon name</Label>
 		<Input id="input" size="lg" placeholder="Pokemon Name" value={pokemon} oninput={handleChange} />
 	</form>
+	{#if pokemonData}
+		<Pokemon {...pokemonData} />
+	{/if}
 </section>
