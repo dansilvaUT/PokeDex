@@ -32,9 +32,16 @@
 <Nav />
 <section class="mt-20 flex flex-col items-center">
 	<Heading tag="h1" class="text-center text-4xl font-bold	">Pokedex Search</Heading>
-	<form class="mb-6" onsubmit={fetchPokemon}>
+	<form class="mb-6 min-w-96" onsubmit={fetchPokemon}>
 		<Label for="input" class="mb-2 block">Enter Pokemon name</Label>
-		<Input id="input" size="lg" placeholder="Pokemon Name" value={pokemon} oninput={handleChange} />
+		<Input
+			id="input"
+			size="lg"
+			placeholder="Pokemon Name"
+			value={pokemon}
+			oninput={handleChange}
+			class="focus:border-blue-500 focus:ring-blue-500"
+		/>
 	</form>
 	{#if pokemonData}
 		<Pokemon {...pokemonData} />
