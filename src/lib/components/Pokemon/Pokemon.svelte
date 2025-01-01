@@ -22,7 +22,7 @@
 	} = $props();
 </script>
 
-<Card>
+<Card class="mobile-only:w-auto">
 	<Heading tag="h3" class="text-center capitalize	">{name}</Heading>
 	<div class="grid grid-cols-2 place-items-center">
 		<img src={images.front_default} alt={`${name} front`} />

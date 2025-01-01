@@ -3,6 +3,7 @@ import containerQueries from '@tailwindcss/container-queries';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 import flowbitePlugin from 'flowbite/plugin';
+const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 
@@ -32,5 +33,14 @@ export default {
 		}
 	},
 
-	plugins: [typography, forms, containerQueries, aspectRatio, flowbitePlugin]
+	plugins: [
+		typography,
+		forms,
+		containerQueries,
+		aspectRatio,
+		flowbitePlugin,
+		plugin(function ({ addVariant }) {
+			addVariant('mobile-only', "@media screen and (max-width: theme('screens.md'))");
+		})
+	]
 };

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Heading } from 'flowbite-svelte';
-	import { Label, Input } from 'flowbite-svelte';
+	import { Label, Input, Heading, GradientButton } from 'flowbite-svelte';
 	import Nav from '$lib/components/Nav/Nav.svelte';
 	import getPokemon from '$lib/api/pokemon/index';
 	import Pokemon from '$lib/components/Pokemon/Pokemon.svelte';
@@ -32,16 +31,19 @@
 <Nav />
 <section class="mt-20 flex flex-col items-center">
 	<Heading tag="h1" class="text-center text-4xl font-bold	">Pokedex Search</Heading>
-	<form class="mb-6 min-w-96" onsubmit={fetchPokemon}>
-		<Label for="input" class="mb-2 block">Enter Pokemon name</Label>
+	<form
+		class="mobile-only:flex-col mobile-only:w-full mobile-only:px-3 mb-6 flex w-1/2 justify-between"
+		onsubmit={fetchPokemon}
+	>
 		<Input
 			id="input"
 			size="lg"
 			placeholder="Pokemon Name"
 			value={pokemon}
 			oninput={handleChange}
-			class="focus:border-blue-500 focus:ring-blue-500"
+			class="mobile-only:w-full mobile-only:mb-4 w-3/4 focus:border-blue-500 focus:ring-blue-500"
 		/>
+		<GradientButton shadow color="green" type="submit">Search</GradientButton>
 	</form>
 	{#if pokemonData}
 		<Pokemon {...pokemonData} />
