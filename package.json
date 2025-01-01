@@ -13,7 +13,9 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"serve": "node server.js"
+		"start": "concurrently \"yarn run start:server\" \"yarn run start:client\"",
+		"start:client": "yarn run dev",
+		"start:server": "nodemon server/server.js"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.45.3",
@@ -22,6 +24,7 @@
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/eslint": "^9.6.0",
 		"autoprefixer": "^10.4.20",
+		"concurrently": "^9.1.2",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
