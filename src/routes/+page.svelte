@@ -5,7 +5,7 @@
 	import Pokemon from '$lib/components/Pokemon/Pokemon.svelte';
 	import Alert from '$lib/components/Alert/Alert.svelte';
 	import { fade } from 'svelte/transition';
-	import { type PokemonData } from '$lib/types/types';
+	import type { PokemonData } from '$lib/types/types';
 
 	$: pokemon = '';
 	let pokemonData: PokemonData;
@@ -71,6 +71,7 @@
 		/>
 		<GradientButton shadow color="green" type="submit">Search</GradientButton>
 	</form>
+	<button>Test</button>
 	{#if pokemonData}
 		<Pokemon {...pokemonData} />
 	{/if}
