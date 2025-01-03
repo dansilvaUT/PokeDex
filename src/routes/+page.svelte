@@ -1,78 +1,13 @@
-<script lang="ts">
-	import { Input, Heading, GradientButton } from 'flowbite-svelte';
-	import Nav from '$lib/components/Nav/Nav.svelte';
-	import getPokemon from '$lib/api/pokemon/index';
-	import Pokemon from '$lib/components/Pokemon/Pokemon.svelte';
-	import Alert from '$lib/components/Alert/Alert.svelte';
-	import { fade } from 'svelte/transition';
-	import type { PokemonData } from '$lib/types/types';
-
-	$: pokemon = '';
-	let pokemonData: PokemonData;
-	$: requestError = false;
-	$: errorMessage = 'Please enter a Pokemon name.';
-
-	const handleChange = (e: Event) => {
-		const target = e.target as HTMLInputElement | null;
-		if (target) {
-			pokemon = target.value;
-		}
-	};
-	const fetchPokemon = async (e: SubmitEvent) => {
-		e.preventDefault();
-		if (!pokemon) {
-			requestError = true;
-			setTimeout(() => {
-				requestError = false;
-			}, 3000);
-			return;
-		}
-
-		try {
-			const data = await getPokemon(pokemon);
-			pokemon = '';
-			pokemonData = {
-				id: data.id,
-				name: data.name,
-				images: data.sprites,
-				abilities: data.abilities
-			};
-		} catch (error: any) {
-			errorMessage = 'Pokemon not found. Please try again.';
-			requestError = true;
-			setTimeout(() => {
-				requestError = false;
-			}, 3000);
-			console.error('ERROR:', { error });
-		}
-	};
+<script>
+	import { Heading } from 'flowbite-svelte';
 </script>
 
-<Nav />
-<section class="mt-28 flex flex-col items-center">
-	<Heading tag="h1" class="text-center text-4xl font-bold	">Pokedex Search</Heading>
-
-	{#if requestError}
-		<div transition:fade={{ duration: 300 }} class="w-2/4">
-			<Alert type="red" message={errorMessage} />
-		</div>
-	{/if}
-	<form
-		class="mobile-only:flex-col mobile-only:w-full mobile-only:px-3 mb-6 mt-4 flex w-1/2 justify-between"
-		onsubmit={fetchPokemon}
-	>
-		<Input
-			id="input"
-			size="lg"
-			placeholder="Pokemon Name"
-			value={pokemon}
-			oninput={handleChange}
-			class="mobile-only:w-full mobile-only:mb-4 w-3/4 focus:border-blue-500 focus:ring-blue-500"
-		/>
-		<GradientButton shadow color="green" type="submit">Search</GradientButton>
-	</form>
-	<button>Test</button>
-	{#if pokemonData}
-		<Pokemon {...pokemonData} />
-	{/if}
+<section class="bg-custom-50 flex h-screen flex-col items-center justify-center p-3">
+	<div class="flex flex-col items-center justify-center p-6 sm:ring-4 sm:ring-slate-200">
+		<Heading tag="h1" class="text-center text-8xl mobile-only:text-7xl">PokeDex</Heading>
+		<p class="my-3 text-lg text-white mobile-only:my-5 mobile-only:text-center">
+			Welcome, to PokeDex. Search your mons, by name. Add/Remove them to and from your collection.
+		</p>
+		<p class="text-white">Login or Create an account.</p>
+	</div>
 </section>
