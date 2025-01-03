@@ -10,8 +10,6 @@
 
 	let opacity = spring(0, { stiffness: 0.1, damping: 0.25 });
 	let scale = spring(1.8, { stiffness: 0.1, damping: 0.25 });
-	//For container
-	let borderThickness = spring(0, { stiffness: 0.1, damping: 0.5 });
 
 	onMount(() => {
 		opacity.set(1);
