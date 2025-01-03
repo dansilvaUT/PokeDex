@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const session = require('express-session');
-const authCtrls = require('./controllers/auth');
+const routes = require('./routes');
 
 app.use(express.json());
 app.use(
@@ -14,14 +14,7 @@ app.use(
 	})
 );
 
-app.get('/api', (req, res) => {
-	res.json({ test: 'Hello World!' });
-});
-
-app.post('/api/auth/register', authCtrls.registerUser);
-app.post('/api/auth/login', authCtrls.authenticateUser);
-app.post('/api/auth/logout', authCtrls.logoutUser);
-app.get('/api/auth/session', authCtrls.getSession);
+app.use(routes);
 
 app.listen(3000, () => {
 	console.log('Server is running on port 3000');
