@@ -1,4 +1,4 @@
-const { createUser } = require('../../db/users/users');
+const { createUser } = require('../../db/users/createUser');
 
 async function registerUser(req, res) {
 	try {
