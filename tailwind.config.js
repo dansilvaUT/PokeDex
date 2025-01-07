@@ -18,7 +18,8 @@ export default {
 			colors: {
 				// flowbite-svelte
 				custom: {
-					50: '#eb2828'
+					50: '#eb2828',
+					indigo: '#6810fc'
 				},
 				primary: {
 					50: '#FFF5F2',
