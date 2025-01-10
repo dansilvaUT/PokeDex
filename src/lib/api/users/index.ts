@@ -1,4 +1,11 @@
 import axios from 'axios';
+interface CustomError {
+	response?: {
+		data?: {
+			error?: string;
+		};
+	};
+}
 
 const apiUrl = '/api/auth/';
 
@@ -13,4 +20,27 @@ const registerUser = async (data: any) => {
 	}
 };
 
-export { registerUser };
+const loginUser = async (data: any) => {
+	try {
+		const response = await axios.post(`${apiUrl}login`, data);
+		if (response.status === 200 && response.data) {
+			return { status: response.status, data: response.data };
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+const checkUser = async () => {
+	try {
+		const response = await axios.get(`${apiUrl}session`);
+		if (response.status === 200 && response.data) {
+			return { status: response.status, data: response.data };
+		}
+	} catch (error) {
+		const typedError = error as CustomError;
+		console.error(`No Session Found ${typedError.response?.data?.error ?? 'Unknown error'}`);
+	}
+};
+
+export { registerUser, loginUser, checkUser };
