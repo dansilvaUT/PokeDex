@@ -1,6 +1,17 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import { onNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
+	import { checkUser } from '$lib/api/users';
+	import { setUser } from '$lib/stores/user';
+
+	onMount(async () => {
+		const response = await checkUser();
+		if (response?.status === 200) {
+			setUser(response.data);
+		}
+	});
+
 	let { children } = $props();
 
 	onNavigate((navigation) => {

@@ -2,6 +2,7 @@
 	import { Input, Label, GradientButton, Heading } from 'flowbite-svelte';
 	import { loginUser } from '$lib/api/users';
 	import { goto } from '$app/navigation';
+	import { setUser } from '$lib/stores/user';
 
 	let user = {
 		username: '',
@@ -20,6 +21,7 @@
 		try {
 			const response = await loginUser(user);
 			if (response?.status === 200) {
+				setUser(response.data);
 				loggedIn = true;
 				console.log('User logged in');
 			}

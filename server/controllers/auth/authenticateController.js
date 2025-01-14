@@ -4,8 +4,6 @@ const { checkUserExists } = require('../../db/users/checkUser');
 async function authenticateUser(req, res) {
 	const { username, password } = req.body;
 
-	console.log(req.body);
-
 	try {
 		const user = await checkUserExists(username);
 		if (!user) {
@@ -19,7 +17,7 @@ async function authenticateUser(req, res) {
 		}
 
 		req.session.user = user;
-		res.status(200).json(user);
+		res.status(200).json({ username: user.username, email: user.email, id: user.id });
 	} catch (error) {
 		console.log(error);
 	}
